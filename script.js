@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
-    let services = {};                    
+    let services = {};
 
     function handleImageError(img) {
         img.onerror = null; // Previene bucles infinitos
         img.style.display = 'none'; // Oculta la imagen si no se puede cargar
         console.warn(`Failed to load image: ${img.src}`);
+    }
+
+    function buildImageUrl(iconPath) {
+        if (!iconPath) return '';
+        return iconPath.replace('${BASE_URL}', BASE_URL);
     }
 
     // Cargar los datos del JSON
@@ -41,19 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
             serviceElement.querySelector('.service-title').textContent = service.title;
             
             const serviceIcon = serviceElement.querySelector('.service-icon');
-            serviceIcon.src = service.icon;
+            serviceIcon.src = buildImageUrl(service.icon);
             serviceIcon.onerror = () => handleImageError(serviceIcon);
             
             serviceElement.querySelector('.service-description').textContent = service.description;
             
             const benefitsIcon = serviceElement.querySelector('.benefits-icon');
-            benefitsIcon.src = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
+            benefitsIcon.src = buildImageUrl(Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons);
             benefitsIcon.onerror = () => handleImageError(benefitsIcon);
             
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             
             const durationIcon = serviceElement.querySelector('.duration-icon');
-            durationIcon.src = service.durationIcon;
+            durationIcon.src = buildImageUrl(service.durationIcon);
             durationIcon.onerror = () => handleImageError(durationIcon);
             
             serviceElement.querySelector('.service-duration').textContent = service.duration;
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupDescription = document.getElementById('popup-description');
 
         popupTitle.textContent = data.title || '';
-        popupImage.src = data.popupImage || data.image || '';
+        popupImage.src = buildImageUrl(data.popupImage || data.image);
         popupImage.alt = data.title || '';
         popupImage.onerror = () => handleImageError(popupImage);
         popupDescription.textContent = data.popupDescription || data.description || '';
