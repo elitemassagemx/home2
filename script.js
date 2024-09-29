@@ -1,7 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
+    let services = {};
 
-    
+    // Fetch the JSON data
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            services = data.services;
+            renderServices('individual');
+            renderPackages();
+        })
+        .catch(error => console.error('Error loading the JSON file:', error));
+
     function renderServices(category) {
         const servicesList = document.getElementById('services-list');
         if (!servicesList) {
@@ -21,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             serviceElement.querySelector('.service-title').textContent = service.title;
             serviceElement.querySelector('.service-icon').src = service.icon;
             serviceElement.querySelector('.service-description').textContent = service.description;
-            serviceElement.querySelector('.benefits-icon').src = Array.isArray(service.benefitsIcon) ? service.benefitsIcon[0] : service.benefitsIcon;
+            serviceElement.querySelector('.benefits-icon').src = service.benefitsIcons[0];
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             serviceElement.querySelector('.duration-icon').src = service.durationIcon;
             serviceElement.querySelector('.service-duration').textContent = service.duration;
@@ -132,8 +142,4 @@ document.addEventListener('DOMContentLoaded', () => {
             popup.style.display = 'none';
         }
     });
-
-    // Initialization
-    renderServices('individual');
-    renderPackages();
 });
