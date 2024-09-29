@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
+    const BASE_URL = <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/trad.png">
     let services = {};
-
+<img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/trad.png" alt="Traducir" id="translate-icon" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-translate-icon.png';">
+                    
     function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
         img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
