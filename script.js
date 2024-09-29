@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img.onload = () => resolve(img);
             img.onerror = () => {
                 console.warn(`Failed to load image: ${url}`);
-                img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
+                img.src = fallbackUrl || `${BASE_URL}https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/`;
                 resolve(img);
             };
             img.src = url;
