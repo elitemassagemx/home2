@@ -1,12 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
-    
-    // El objeto 'services' permanece igual que en tu código original
+    let services = {};
 
     function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
         img.src = fallbackUrl;
     }
+
+    // Cargar los datos del JSON
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            services = data.services;
+            renderServices('individual');
+            renderPackages();
+        })
+        .catch(error => console.error('Error loading the JSON file:', error));
 
     function renderServices(category) {
         const servicesList = document.getElementById('services-list');
@@ -152,7 +161,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialization
-    renderServices('individual');
-    renderPackages();
+    // La inicialización se realiza después de cargar los datos del JSON
 });
