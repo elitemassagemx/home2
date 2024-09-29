@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
     let services = {};
 
+    // Función para manejar errores de carga de imágenes
+    function handleImageError(img, isIcon = false) {
+        img.onerror = null; // Previene bucles infinitos
+        img.src = `${BASE_URL}${isIcon ? 'fallback-icon.png' : 'fallback-image.JPG'}`;
+    }
+
     // Fetch the JSON data
     fetch('data.json')
         .then(response => response.json())
@@ -29,11 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const serviceElement = template.content.cloneNode(true);
             
             serviceElement.querySelector('.service-title').textContent = service.title;
-            serviceElement.querySelector('.service-icon').src = service.icon;
+            const serviceIcon = serviceElement.querySelector('.service-icon');
+            serviceIcon.src = `${BASE_URL}${service.icon}`;
+            serviceIcon.onerror = () => handleImageError(serviceIcon, true);
+
             serviceElement.querySelector('.service-description').textContent = service.description;
-            serviceElement.querySelector('.benefits-icon').src = service.benefitsIcons[0];
+            
+            const benefitsIcon = serviceElement.querySelector('.benefits-icon');
+            benefitsIcon.src = `${BASE_URL}${service.benefitsIcons[0]}`;
+            benefitsIcon.onerror = () => handleImageError(benefitsIcon, true);
+
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
-            serviceElement.querySelector('.duration-icon').src = service.durationIcon;
+            
+            const durationIcon = serviceElement.querySelector('.duration-icon');
+            durationIcon.src = `${BASE_URL}${service.durationIcon}`;
+            durationIcon.onerror = () => handleImageError(durationIcon, true);
+
             serviceElement.querySelector('.service-duration').textContent = service.duration;
 
             const reserveButton = serviceElement.querySelector('.reserve-button');
@@ -80,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupDescription = document.getElementById('popup-description');
 
         popupTitle.textContent = data.title || '';
-        popupImage.src = data.popupImage || data.image || '';
+        popupImage.src = `${BASE_URL}${data.popupImage || data.image}`;
+        popupImage.onerror = () => handleImageError(popupImage);
         popupImage.alt = data.title || '';
         popupDescription.textContent = data.popupDescription || data.description || '';
 
