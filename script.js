@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/"
+    const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
     let services = {};                    
     function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
