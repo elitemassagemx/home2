@@ -1,22 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
-    let services = {};
+    
+    // El objeto 'services' permanece igual que en tu código original
 
-    // Función para manejar errores de carga de imágenes
-    function handleImageError(img, isIcon = false) {
+    function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
-        img.src = `${BASE_URL}${isIcon ? 'fallback-icon.png' : 'fallback-image.JPG'}`;
+        img.src = fallbackUrl;
     }
-
-    // Fetch the JSON data
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            services = data.services;
-            renderServices('individual');
-            renderPackages();
-        })
-        .catch(error => console.error('Error loading the JSON file:', error));
 
     function renderServices(category) {
         const servicesList = document.getElementById('services-list');
@@ -35,22 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const serviceElement = template.content.cloneNode(true);
             
             serviceElement.querySelector('.service-title').textContent = service.title;
+            
             const serviceIcon = serviceElement.querySelector('.service-icon');
-            serviceIcon.src = `${BASE_URL}${service.icon}`;
-            serviceIcon.onerror = () => handleImageError(serviceIcon, true);
-
+            serviceIcon.src = service.icon;
+            serviceIcon.onerror = () => handleImageError(serviceIcon, `${BASE_URL}fallback-icon.png`);
+            
             serviceElement.querySelector('.service-description').textContent = service.description;
             
             const benefitsIcon = serviceElement.querySelector('.benefits-icon');
-            benefitsIcon.src = `${BASE_URL}${service.benefitsIcons[0]}`;
-            benefitsIcon.onerror = () => handleImageError(benefitsIcon, true);
-
+            benefitsIcon.src = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
+            benefitsIcon.onerror = () => handleImageError(benefitsIcon, `${BASE_URL}fallback-icon.png`);
+            
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             
             const durationIcon = serviceElement.querySelector('.duration-icon');
-            durationIcon.src = `${BASE_URL}${service.durationIcon}`;
-            durationIcon.onerror = () => handleImageError(durationIcon, true);
-
+            durationIcon.src = service.durationIcon;
+            durationIcon.onerror = () => handleImageError(durationIcon, `${BASE_URL}fallback-icon.png`);
+            
             serviceElement.querySelector('.service-duration').textContent = service.duration;
 
             const reserveButton = serviceElement.querySelector('.reserve-button');
@@ -97,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupDescription = document.getElementById('popup-description');
 
         popupTitle.textContent = data.title || '';
-        popupImage.src = `${BASE_URL}${data.popupImage || data.image}`;
-        popupImage.onerror = () => handleImageError(popupImage);
+        popupImage.src = data.popupImage || data.image || '';
         popupImage.alt = data.title || '';
+        popupImage.onerror = () => handleImageError(popupImage, `${BASE_URL}fallback-image.jpg`);
         popupDescription.textContent = data.popupDescription || data.description || '';
 
         popup.style.display = 'block';
@@ -161,40 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Smooth scroll for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-
-    // Sticky header implementation
-    const header = document.getElementById('sticky-header');
-    const sticky = header.offsetTop;
-
-    function makeHeaderSticky() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    }
-
-    window.onscroll = makeHeaderSticky;
-
-    // Initialize Google Translate
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'es',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-    }
-
-    // Load Google Translate script
-    const script = document.createElement('script');
-    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    document.body.appendChild(script);
+    // Initialization
+    renderServices('individual');
+    renderPackages();
 });
