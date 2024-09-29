@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
     let services = {};                    
 
-    function handleImageError(img, fallbackUrl) {
+    function handleImageError(img) {
         img.onerror = null; // Previene bucles infinitos
-        img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
+        img.style.display = 'none'; // Oculta la imagen si no se puede cargar
         console.warn(`Failed to load image: ${img.src}`);
     }
 
@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
             renderServices('individual');
             renderPackages();
         })
-        .catch(error => console.error('Error loading the JSON file:', error));
+        .catch(error => {
+            console.error('Error loading the JSON file:', error);
+            document.getElementById('services-list').innerHTML = '<p>Error al cargar los servicios. Por favor, intente más tarde.</p>';
+            document.getElementById('package-list').innerHTML = '<p>Error al cargar los paquetes. Por favor, intente más tarde.</p>';
+        });
 
     function renderServices(category) {
         const servicesList = document.getElementById('services-list');
@@ -38,19 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const serviceIcon = serviceElement.querySelector('.service-icon');
             serviceIcon.src = service.icon;
-            serviceIcon.onerror = () => handleImageError(serviceIcon, `${BASE_URL}fallback-icon.png`);
+            serviceIcon.onerror = () => handleImageError(serviceIcon);
             
             serviceElement.querySelector('.service-description').textContent = service.description;
             
             const benefitsIcon = serviceElement.querySelector('.benefits-icon');
             benefitsIcon.src = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
-            benefitsIcon.onerror = () => handleImageError(benefitsIcon, `${BASE_URL}fallback-icon.png`);
+            benefitsIcon.onerror = () => handleImageError(benefitsIcon);
             
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             
             const durationIcon = serviceElement.querySelector('.duration-icon');
             durationIcon.src = service.durationIcon;
-            durationIcon.onerror = () => handleImageError(durationIcon, `${BASE_URL}fallback-icon.png`);
+            durationIcon.onerror = () => handleImageError(durationIcon);
             
             serviceElement.querySelector('.service-duration').textContent = service.duration;
 
@@ -100,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popupTitle.textContent = data.title || '';
         popupImage.src = data.popupImage || data.image || '';
         popupImage.alt = data.title || '';
-        popupImage.onerror = () => handleImageError(popupImage, `${BASE_URL}fallback-image.jpg`);
+        popupImage.onerror = () => handleImageError(popupImage);
         popupDescription.textContent = data.popupDescription || data.description || '';
 
         popup.style.display = 'block';
