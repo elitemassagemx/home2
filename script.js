@@ -1,19 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
-    let services = {};
+    let services = {};                    
 
     function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
-        img.src = fallbackUrl;
+        img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
         console.warn(`Failed to load image: ${img.src}`);
-    }
-
-    function buildImageUrl(iconPath) {
-        if (!iconPath) return `${BASE_URL}fallback-image.jpg`;
-        if (iconPath.startsWith('http://') || iconPath.startsWith('https://')) {
-            return iconPath;
-        }
-        return `${BASE_URL}${iconPath}`;
     }
 
     // Cargar los datos del JSON
@@ -24,11 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderServices('individual');
             renderPackages();
         })
-        .catch(error => {
-            console.error('Error loading the JSON file:', error);
-            document.getElementById('services-list').innerHTML = '<p>Error al cargar los servicios. Por favor, intente más tarde.</p>';
-            document.getElementById('package-list').innerHTML = '<p>Error al cargar los paquetes. Por favor, intente más tarde.</p>';
-        });
+        .catch(error => console.error('Error loading the JSON file:', error));
 
     function renderServices(category) {
         const servicesList = document.getElementById('services-list');
@@ -49,20 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
             serviceElement.querySelector('.service-title').textContent = service.title;
             
             const serviceIcon = serviceElement.querySelector('.service-icon');
-            serviceIcon.src = buildImageUrl(service.icon);
-            serviceIcon.onerror = () => handleImageError(serviceIcon, buildImageUrl('fallback-icon.png'));
+            serviceIcon.src = service.icon;
+            serviceIcon.onerror = () => handleImageError(serviceIcon, `${BASE_URL}fallback-icon.png`);
             
             serviceElement.querySelector('.service-description').textContent = service.description;
             
             const benefitsIcon = serviceElement.querySelector('.benefits-icon');
-            benefitsIcon.src = buildImageUrl(Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons);
-            benefitsIcon.onerror = () => handleImageError(benefitsIcon, buildImageUrl('fallback-icon.png'));
+            benefitsIcon.src = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
+            benefitsIcon.onerror = () => handleImageError(benefitsIcon, `${BASE_URL}fallback-icon.png`);
             
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             
             const durationIcon = serviceElement.querySelector('.duration-icon');
-            durationIcon.src = buildImageUrl(service.durationIcon);
-            durationIcon.onerror = () => handleImageError(durationIcon, buildImageUrl('fallback-icon.png'));
+            durationIcon.src = service.durationIcon;
+            durationIcon.onerror = () => handleImageError(durationIcon, `${BASE_URL}fallback-icon.png`);
             
             serviceElement.querySelector('.service-duration').textContent = service.duration;
 
@@ -110,9 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupDescription = document.getElementById('popup-description');
 
         popupTitle.textContent = data.title || '';
-        popupImage.src = buildImageUrl(data.popupImage || data.image);
+        popupImage.src = data.popupImage || data.image || '';
         popupImage.alt = data.title || '';
-        popupImage.onerror = () => handleImageError(popupImage, buildImageUrl('fallback-image.jpg'));
+        popupImage.onerror = () => handleImageError(popupImage, `${BASE_URL}fallback-image.jpg`);
         popupDescription.textContent = data.popupDescription || data.description || '';
 
         popup.style.display = 'block';
@@ -125,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function changeLanguage(lang) {
-        const selectField = document.querySelector('.goog-te-combo');
+        var selectField = document.querySelector('.goog-te-combo');
         if (selectField) {
             selectField.value = lang;
             selectField.dispatchEvent(new Event('change'));
