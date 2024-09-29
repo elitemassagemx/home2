@@ -4,7 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleImageError(img, fallbackUrl) {
         img.onerror = null; // Previene bucles infinitos
-        img.src = fallbackUrl;
+        img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
+        console.warn(`Failed to load image: ${img.src}`);
+    }
+
+    function loadImage(url, fallbackUrl) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+                console.warn(`Failed to load image: ${url}`);
+                img.src = fallbackUrl || `${BASE_URL}fallback-image.jpg`;
+                resolve(img);
+            };
+            img.src = url;
+        });
     }
 
     // Cargar los datos del JSON
@@ -36,20 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
             serviceElement.querySelector('.service-title').textContent = service.title;
             
             const serviceIcon = serviceElement.querySelector('.service-icon');
-            serviceIcon.src = service.icon;
-            serviceIcon.onerror = () => handleImageError(serviceIcon, `${BASE_URL}fallback-icon.png`);
+            loadImage(service.icon, `${BASE_URL}fallback-icon.png`)
+                .then(img => serviceIcon.src = img.src);
             
             serviceElement.querySelector('.service-description').textContent = service.description;
             
             const benefitsIcon = serviceElement.querySelector('.benefits-icon');
-            benefitsIcon.src = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
-            benefitsIcon.onerror = () => handleImageError(benefitsIcon, `${BASE_URL}fallback-icon.png`);
+            const benefitsIconSrc = Array.isArray(service.benefitsIcons) ? service.benefitsIcons[0] : service.benefitsIcons;
+            loadImage(benefitsIconSrc, `${BASE_URL}fallback-icon.png`)
+                .then(img => benefitsIcon.src = img.src);
             
             serviceElement.querySelector('.service-benefits').textContent = service.benefits.join(', ');
             
             const durationIcon = serviceElement.querySelector('.duration-icon');
-            durationIcon.src = service.durationIcon;
-            durationIcon.onerror = () => handleImageError(durationIcon, `${BASE_URL}fallback-icon.png`);
+            loadImage(service.durationIcon, `${BASE_URL}fallback-icon.png`)
+                .then(img => durationIcon.src = img.src);
             
             serviceElement.querySelector('.service-duration').textContent = service.duration;
 
@@ -97,9 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupDescription = document.getElementById('popup-description');
 
         popupTitle.textContent = data.title || '';
-        popupImage.src = data.popupImage || data.image || '';
-        popupImage.alt = data.title || '';
-        popupImage.onerror = () => handleImageError(popupImage, `${BASE_URL}fallback-image.jpg`);
+        loadImage(data.popupImage || data.image, `${BASE_URL}fallback-image.jpg`)
+            .then(img => {
+                popupImage.src = img.src;
+                popupImage.alt = data.title || '';
+            });
         popupDescription.textContent = data.popupDescription || data.description || '';
 
         popup.style.display = 'block';
@@ -160,6 +177,4 @@ document.addEventListener('DOMContentLoaded', () => {
             popup.style.display = 'none';
         }
     });
-
-    // La inicialización se realiza después de cargar los datos del JSON
 });
