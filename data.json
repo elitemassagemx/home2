@@ -307,7 +307,10 @@
           "${BASE_URL}b.png",
           "${BASE_URL}cculinario.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}rosao.JPG",
         "popupDescription": "Comienza con un lujoso masaje de aromaterapia en pareja de 60 minutos, donde cuidamos cada detalle para que la experiencia sea sensorial. Después del masaje disfruten las delicias dulces del café con pastel o tarta de su previamente elegidas por ti. Este paquete combina perfectamente la relajación profunda con los placeres culinarios, creando un momento especial para conectar.",
         "popupImage": "${BASE_URL}romance-total2-popup.JPG"
@@ -333,7 +336,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}jamc.JPG",
         "popupDescription": "El Paquete Lujo y Sabor es una experiencia premium que combina el lujo de un masaje de piedras calientes con una degustación gourmet. Comienza con un relajante masaje de 90 minutos donde las piedras volcánicas calientes aliviarán profundamente la tensión muscular. Luego, disfruten de 30 minutos para disfrutar nuestra selección cuidadosamente curada de vinos finos, quesos artesanales y fresas bañadas en chocolate. Este paquete es perfecto para aquellos que buscan una experiencia que deleite todos los sentidos.",
         "popupImage": "${BASE_URL}lujo-sabor-popup.JPG"
@@ -359,7 +365,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}chen.JPG",
 "popupDescription": "El Paquete Sensaciones Inolvidables es una experiencia diseñada para despertar todos sus sentidos. Comienza con un lujoso masaje de cuerpo completo en pareja de 90 minutos, que les dejará completamente relajados y renovados. Después, disfruten de 45 minutos de pura indulgencia con una copa de vino selecto, fresas cubiertas de chocolate y una exquisita tabla de quesos artísticos. Este paquete combina perfectamente la relajación profunda con una experiencia gastronómica refinada, creando recuerdos que perdurarán mucho después de que termine su visita.",
         "popupImage": "${BASE_URL}sensaciones-inolvidables-popup.JPG"
@@ -385,7 +394,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}copas.JPG",
         "popupDescription": "El Paquete Escape de Lujo es la elección perfecta para parejas que buscan una experiencia de spa verdaderamente indulgente. Comienza con un masaje de aromaterapia relajante, seguido de una envoltura de algas desintoxicante. Este tratamiento de 90 minutos dejará su piel suave y su cuerpo completamente relajado. Después, disfruten de 30 minutos de placer culinario con una copa de vino selecto, fresas cubiertas de chocolate y una exquisita tabla de quesos y frutas frescas. Es la combinación perfecta de relajación, desintoxicación y placer gastronómico.",
         "popupImage": "${BASE_URL}escape-lujo-popup.JPG"
@@ -411,7 +423,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}jamc.JPG",
         "popupDescription": "El Paquete Relax y Sabores ofrece una combinación perfecta de relajación y placer culinario. Comienza con un masaje de reflexología en pareja de 60 minutos, que alivia el estrés y promueve el bienestar general a través de la estimulación de puntos específicos en los pies. Después, disfruten de 30 minutos de indulgencia con una copa de vino selecto, fresas cubiertas de chocolate y una selección de quesos gourmet. Este paquete es ideal para parejas que buscan una experiencia relajante y romántica con un toque de sofisticación culinaria.",
         "popupImage": "${BASE_URL}relax-sabores-popup.JPG"
@@ -436,7 +451,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}cculinario.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}tranquilidad-gourmet-image.JPG",
         "popupDescription": "El Paquete Tranquilidad Gourmet combina los beneficios terapéuticos del CBD con una experiencia de café gourmet. Comienza con un masaje de 60 minutos utilizando aceites infundidos con CBD, conocidos por sus propiedades antiinflamatorias y relajantes. Después, disfruten de 30 minutos de placer culinario con su elección de café gourmet (Latte, Capuchino o Expreso) acompañado de un delicioso pastel o tarta. Este paquete es perfecto para parejas que buscan alivio del estrés y el dolor, junto con una experiencia de café de alta calidad.",
         "popupImage": "${BASE_URL}tranquilidad-gourmet-popup.JPG"
@@ -462,7 +480,10 @@
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
-        "durationIcon": "${BASE_URL}duration-icon.png", "c30min",
+        "durationIcons": [
+        "${BASE_URL}duration-icon.png",
+        "${BASE_URL}c30min-icon.png"
+        ],
         "image": "${BASE_URL}copas.JPG",
         "popupDescription": "El Paquete Relajación y Gourmet ofrece una experiencia completa de bienestar y placer culinario. Comienza con un masaje sueco en pareja de 60 minutos, utilizando técnicas de presión suave y movimientos largos para aliviar la tensión muscular y promover la relajación. Después, disfruten de 30 minutos de indulgencia con una copa de vino selecto, fresas cubiertas de chocolate y una selección de quesos finos. Este paquete es ideal para parejas que buscan una combinación perfecta de relajación física y placer gastronómico en un ambiente lujoso y romántico.",
         "popupImage": "${BASE_URL}relajacion-gourmet-popup.JPG"
