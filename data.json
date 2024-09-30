@@ -19,7 +19,7 @@
         "benefits": ["Aliviarás Dolores Musculares", "Mejorarás tu Circulación", "Relajación Profunda"],
         "duration": "60 min",
         "icon": "${BASE_URL}rhpiedrasfloresvela.png",
-        "benefitsIcons": ["${BASE_URL}sqpierna.png", "${BASE_URL}ccirculacion.png", "${BASE_URL}benefits-icon3.png"],
+        "benefitsIcons": ["${BASE_URL}sqpierna.png", "${BASE_URL}ccirculacion.png", "${BASE_URL}sqfloresmanos.png"],
         "durationIcon": "${BASE_URL}duration-icon.png",
         "image": "${BASE_URL}piedras-calientes-image.JPG",
         "popupDescription": "El masaje con piedras calientes es una terapia antigua que combina el masaje tradicional con el uso de piedras volcánicas lisas y calientes. El calor penetrante de las piedras ayuda a relajar los músculos en profundidad, permitiendo a nuestros terapeutas trabajar más efectivamente en las áreas de tensión. Esta terapia es particularmente efectiva para aliviar dolores musculares, mejorar la circulación y proporcionar una sensación de relajación profunda.",
@@ -43,7 +43,7 @@
         "benefits": ["Relajación Total", "Mejora Circulación Sanguínea"],
         "duration": "60 min",
         "icon": "${BASE_URL}pinsuecia.png",
-        "benefitsIcons": ["${BASE_URL}ccirculacion.png", "${BASE_URL}benefits-icon2.png", "${BASE_URL}benefits-icon3.png"],
+        "benefitsIcons": ["${BASE_URL}sqfloresmanos.png", "${BASE_URL}ccirculacion.png", "${BASE_URL}sqfloresmanos.png"],
         "durationIcon": "${BASE_URL}duration-icon.png",
         "image": "${BASE_URL}relajante.JPG",
         "popupDescription": "Conocido por su capacidad para inducir una relajación profunda y aliviar la tensión muscular. Nuestros terapeutas utilizan una combinación de movimientos largos y fluidos, para mejorar la circulación, flexibilidad y bienestar general. Este masaje es perfecto para aquellos que buscan un escape relajante del estrés diario.",
@@ -79,7 +79,7 @@
         "benefits": ["Relajación Profunda", "Aumento de Energía", "Mejora Circulación"],
         "duration": "60 min",
         "icon": "${BASE_URL}lomi.png",
-        "benefitsIcons": ["${BASE_URL}rhreflexologia.png", "${BASE_URL}benefits-icon2.png", "${BASE_URL}ccirculacion.png"],
+        "benefitsIcons": ["${BASE_URL}rhreflexologia.png", "${BASE_URL}sqfloresmanos.png", "${BASE_URL}ccirculacion.png"],
         "durationIcon": "${BASE_URL}duration-icon.png",
         "image": "${BASE_URL}lomi-lomi-image.JPG",
         "popupDescription": "El Lomi Lomi es un masaje tradicional hawaiano que utiliza movimientos largos, fluidos y rítmicos de los antebrazos y las manos para masajear el cuerpo. Esta técnica única no solo relaja profundamente los músculos, sino que también se dice que ayuda a liberar patrones de pensamiento negativos almacenados en el cuerpo. El resultado es una sensación de rejuvenecimiento tanto física como mental.",
@@ -91,7 +91,7 @@
         "benefits": ["Alivio Dolor Muscular", "Reduce Ansiedad", "Calma Profunda"],
         "duration": "60 min",
         "icon": "${BASE_URL}sqfragancias.png",
-        "benefitsIcons": ["${BASE_URL}benefits-icon1.png", "${BASE_URL}benefits-icon2.png", "${BASE_URL}benefits-icon3.png"],
+        "benefitsIcons": ["${BASE_URL}benefits-icon1.png", "${BASE_URL}sqmanoflorverde.png", "${BASE_URL}benefits-icon3.png"],
         "durationIcon": "${BASE_URL}duration-icon.png",
         "image": "${BASE_URL}cbd-image.JPG",
         "popupDescription": "Nuestro masaje con aceites de CBD combina las técnicas de masaje tradicionales con los beneficios terapéuticos del cannabidiol (CBD). El CBD es conocido por sus propiedades antiinflamatorias y calmantes. Este tratamiento puede ayudar a aliviar el dolor muscular y promover una sensación de calma y bienestar general.",
@@ -251,7 +251,7 @@
         "icon": "${BASE_URL}cbd-icon.png",
         "benefitsIcons": [
           "${BASE_URL}benefits-icon1.png",
-          "${BASE_URL}benefits-icon2.png",
+          "${BASE_URL}sqmanoflorverde.png",
           "${BASE_URL}benefits-icon3.png"
         ],
         "durationIcon": "${BASE_URL}duration-icon.png",
@@ -278,7 +278,7 @@
         ],
         "icon": "${BASE_URL}romance-total-icon.png",
         "benefitsIcons": [
-          "${BASE_URL}sqdifusoraromateriapia.png",
+          "${BASE_URL}sqquesoyvino.png",
           "${BASE_URL}benefits-icon2.png",
           "${BASE_URL}benefits-icon3.png"
         ],
@@ -333,7 +333,7 @@
         "icon": "${BASE_URL}lujo-sabor-icon.png",
         "benefitsIcons": [
           "${BASE_URL}benefits-icon1.png",
-          "${BASE_URL}benefits-icon2.png",
+          "${BASE_URL}sqquesoyvino.png",
           "${BASE_URL}benefits-icon3.png"
         ],
         "durationIcons": [
