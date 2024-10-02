@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded');
+
     const BASE_URL = "https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/";
     let services = {};
 
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
+            console.log('JSON data loaded successfully');
             services = data.services;
             renderServices('individual');
             renderPackages();
@@ -28,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function renderServices(category) {
+        console.log(`Rendering services for category: ${category}`);
         const servicesList = document.getElementById('services-list');
         if (!servicesList) {
             console.error('Element with id "services-list" not found');
@@ -71,9 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             servicesList.appendChild(serviceElement);
         });
+        console.log(`Rendered ${services[category].length} services`);
     }
 
     function renderPackages() {
+        console.log('Rendering packages');
         const packageList = document.getElementById('package-list');
         if (!packageList) {
             console.error('Element with id "package-list" not found');
@@ -98,9 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             packageList.appendChild(packageElement);
         });
+        console.log(`Rendered ${services.paquetes.length} packages`);
     }
 
     function showPopup(data) {
+        console.log('Showing popup for:', data.title);
         const popup = document.getElementById('popup');
         const popupTitle = document.getElementById('popup-title');
         const popupImage = document.getElementById('popup-image');
@@ -116,16 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sendWhatsAppMessage(action, serviceTitle) {
+        console.log(`Sending WhatsApp message for: ${action} - ${serviceTitle}`);
         const message = encodeURIComponent(`Hola! Quiero ${action} un ${serviceTitle}`);
         const url = `https://wa.me/5215640020305?text=${message}`;
         window.open(url, '_blank');
     }
 
     function changeLanguage(lang) {
+        console.log(`Changing language to: ${lang}`);
         var selectField = document.querySelector('.goog-te-combo');
         if (selectField) {
             selectField.value = lang;
             selectField.dispatchEvent(new Event('change'));
+        } else {
+            console.error('Google Translate dropdown not found');
         }
     }
 
@@ -133,12 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageOptions = document.querySelector('.language-options');
 
     translateIcon.addEventListener('click', () => {
+        console.log('Translate icon clicked');
         languageOptions.style.display = languageOptions.style.display === 'block' ? 'none' : 'block';
     });
 
     document.querySelectorAll('.lang-option').forEach(option => {
         option.addEventListener('click', (event) => {
             const lang = event.currentTarget.dataset.lang;
+            console.log(`Language option clicked: ${lang}`);
             changeLanguage(lang);
             languageOptions.style.display = 'none';
         });
@@ -152,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.choice-chip').forEach(chip => {
         chip.addEventListener('click', () => {
+            console.log(`Choice chip clicked: ${chip.dataset.category}`);
             document.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
             renderServices(chip.dataset.category);
@@ -162,29 +177,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('.close');
 
     closeButton.addEventListener('click', () => {
+        console.log('Closing popup');
         popup.style.display = 'none';
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === popup) {
+            console.log('Closing popup (clicked outside)');
             popup.style.display = 'none';
         }
     });
 
     // Código para la animación de la galería
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        console.log('GSAP and ScrollTrigger are loaded');
         gsap.registerPlugin(ScrollTrigger);
 
         const gallery = document.querySelector('.gallery-container');
         if (gallery) {
+            console.log('Gallery container found');
             ScrollTrigger.create({
                 trigger: gallery,
                 start: "top 80%",
-                onEnter: () => gallery.classList.add('is-visible'),
-                onLeaveBack: () => gallery.classList.remove('is-visible')
+                onEnter: () => {
+                    console.log('Gallery entered viewport');
+                    gallery.classList.add('is-visible');
+                },
+                onLeaveBack: () => {
+                    console.log('Gallery left viewport');
+                    gallery.classList.remove('is-visible');
+                }
             });
 
-            gsap.utils.toArray('.gallery-container img').forEach(img => {
+            const images = gsap.utils.toArray('.gallery-container img');
+            console.log(`Found ${images.length} images in the gallery`);
+            images.forEach((img, index) => {
                 gsap.from(img, {
                     scale: 0.8,
                     opacity: 0,
@@ -193,10 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     scrollTrigger: {
                         trigger: img,
                         start: "top 80%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        onEnter: () => console.log(`Image ${index + 1} animation started`)
                     }
                 });
             });
+        } else {
+            console.error('Gallery container not found');
         }
     } else {
         console.warn('GSAP or ScrollTrigger not loaded. Gallery animations will not work.');
