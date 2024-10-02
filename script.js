@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let services = {};
 
     function handleImageError(img) {
-        img.onerror = null; // Previene bucles infinitos
-        img.style.display = 'none'; // Oculta la imagen si no se puede cargar
         console.warn(`Failed to load image: ${img.src}`);
+        img.style.display = 'none';
+        // Opcional: Mostrar una imagen de reemplazo
+        // img.src = 'path/to/fallback-image.png';
     }
 
     function buildImageUrl(iconPath) {
@@ -15,34 +16,45 @@ document.addEventListener('DOMContentLoaded', () => {
         return iconPath.replace('${BASE_URL}', BASE_URL);
     }
 
+    function getElement(id) {
+        const element = document.getElementById(id);
+        if (!element) {
+            console.error(`Element with id "${id}" not found`);
+        }
+        return element;
+    }
+
     // Cargar los datos del JSON
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            console.log('JSON data loaded successfully');
-            services = data.services;
-            renderServices('individual');
-            renderPackages();
-        })
-        .catch(error => {
-            console.error('Error loading the JSON file:', error);
-            document.getElementById('services-list').innerHTML = '<p>Error al cargar los servicios. Por favor, intente más tarde.</p>';
-            document.getElementById('package-list').innerHTML = '<p>Error al cargar los paquetes. Por favor, intente más tarde.</p>';
-        });
+    function loadJSONData() {
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('JSON data loaded successfully');
+                services = data.services;
+                renderServices('individual');
+                renderPackages();
+            })
+            .catch(error => {
+                console.error('Error loading the JSON file:', error);
+                const servicesList = getElement('services-list');
+                const packageList = getElement('package-list');
+                if (servicesList) servicesList.innerHTML = '<p>Error al cargar los servicios. Por favor, intente más tarde.</p>';
+                if (packageList) packageList.innerHTML = '<p>Error al cargar los paquetes. Por favor, intente más tarde.</p>';
+            });
+    }
 
     function renderServices(category) {
         console.log(`Rendering services for category: ${category}`);
-        const servicesList = document.getElementById('services-list');
-        if (!servicesList) {
-            console.error('Element with id "services-list" not found');
-            return;
-        }
+        const servicesList = getElement('services-list');
+        const template = getElement('service-template');
+        if (!servicesList || !template) return;
+
         servicesList.innerHTML = '';
-        const template = document.getElementById('service-template');
-        if (!template) {
-            console.error('Element with id "service-template" not found');
-            return;
-        }
 
         services[category].forEach(service => {
             const serviceElement = template.content.cloneNode(true);
@@ -80,11 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderPackages() {
         console.log('Rendering packages');
-        const packageList = document.getElementById('package-list');
-        if (!packageList) {
-            console.error('Element with id "package-list" not found');
-            return;
-        }
+        const packageList = getElement('package-list');
+        if (!packageList) return;
+
         packageList.innerHTML = '';
         services.paquetes.forEach(pkg => {
             const packageElement = document.createElement('div');
@@ -109,10 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showPopup(data) {
         console.log('Showing popup for:', data.title);
-        const popup = document.getElementById('popup');
-        const popupTitle = document.getElementById('popup-title');
-        const popupImage = document.getElementById('popup-image');
-        const popupDescription = document.getElementById('popup-description');
+        const popup = getElement('popup');
+        const popupTitle = getElement('popup-title');
+        const popupImage = getElement('popup-image');
+        const popupDescription = getElement('popup-description');
+        if (!popup || !popupTitle || !popupImage || !popupDescription) return;
 
         popupTitle.textContent = data.title || '';
         popupImage.src = buildImageUrl(data.popupImage || data.image);
@@ -141,94 +152,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const translateIcon = document.getElementById('translate-icon');
-    const languageOptions = document.querySelector('.language-options');
+    function setupLanguageSelector() {
+        const translateIcon = getElement('translate-icon');
+        const languageOptions = document.querySelector('.language-options');
+        if (!translateIcon || !languageOptions) return;
 
-    translateIcon.addEventListener('click', () => {
-        console.log('Translate icon clicked');
-        languageOptions.style.display = languageOptions.style.display === 'block' ? 'none' : 'block';
-    });
-
-    document.querySelectorAll('.lang-option').forEach(option => {
-        option.addEventListener('click', (event) => {
-            const lang = event.currentTarget.dataset.lang;
-            console.log(`Language option clicked: ${lang}`);
-            changeLanguage(lang);
-            languageOptions.style.display = 'none';
+        translateIcon.addEventListener('click', () => {
+            console.log('Translate icon clicked');
+            languageOptions.style.display = languageOptions.style.display === 'block' ? 'none' : 'block';
         });
-    });
 
-    document.addEventListener('click', (event) => {
-        if (!translateIcon.contains(event.target) && !languageOptions.contains(event.target)) {
-            languageOptions.style.display = 'none';
-        }
-    });
-
-    document.querySelectorAll('.choice-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            console.log(`Choice chip clicked: ${chip.dataset.category}`);
-            document.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            renderServices(chip.dataset.category);
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (event) => {
+                const lang = event.currentTarget.dataset.lang;
+                console.log(`Language option clicked: ${lang}`);
+                changeLanguage(lang);
+                languageOptions.style.display = 'none';
+            });
         });
-    });
 
-    const popup = document.getElementById('popup');
-    const closeButton = document.querySelector('.close');
+        document.addEventListener('click', (event) => {
+            if (!translateIcon.contains(event.target) && !languageOptions.contains(event.target)) {
+                languageOptions.style.display = 'none';
+            }
+        });
+    }
 
-    closeButton.addEventListener('click', () => {
-        console.log('Closing popup');
-        popup.style.display = 'none';
-    });
+    function setupCategorySelector() {
+        document.querySelectorAll('.choice-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                console.log(`Choice chip clicked: ${chip.dataset.category}`);
+                document.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                renderServices(chip.dataset.category);
+            });
+        });
+    }
 
-    window.addEventListener('click', (event) => {
-        if (event.target === popup) {
-            console.log('Closing popup (clicked outside)');
+    function setupPopup() {
+        const popup = getElement('popup');
+        const closeButton = document.querySelector('.close');
+        if (!popup || !closeButton) return;
+
+        closeButton.addEventListener('click', () => {
+            console.log('Closing popup');
             popup.style.display = 'none';
-        }
-    });
+        });
 
-    // Código para la animación de la galería
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        window.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                console.log('Closing popup (clicked outside)');
+                popup.style.display = 'none';
+            }
+        });
+    }
+
+    function setupGalleryAnimations() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+            console.warn('GSAP or ScrollTrigger not loaded. Gallery animations will not work.');
+            return;
+        }
+
         console.log('GSAP and ScrollTrigger are loaded');
         gsap.registerPlugin(ScrollTrigger);
 
         const gallery = document.querySelector('.gallery-container');
-        if (gallery) {
-            console.log('Gallery container found');
-            ScrollTrigger.create({
-                trigger: gallery,
-                start: "top 80%",
-                onEnter: () => {
-                    console.log('Gallery entered viewport');
-                    gallery.classList.add('is-visible');
-                },
-                onLeaveBack: () => {
-                    console.log('Gallery left viewport');
-                    gallery.classList.remove('is-visible');
-                }
-            });
-
-            const images = gsap.utils.toArray('.gallery-container img');
-            console.log(`Found ${images.length} images in the gallery`);
-            images.forEach((img, index) => {
-                gsap.from(img, {
-                    scale: 0.8,
-                    opacity: 0,
-                    duration: 0.5,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: img,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse",
-                        onEnter: () => console.log(`Image ${index + 1} animation started`)
-                    }
-                });
-            });
-        } else {
+        if (!gallery) {
             console.error('Gallery container not found');
+            return;
         }
-    } else {
-        console.warn('GSAP or ScrollTrigger not loaded. Gallery animations will not work.');
+
+        console.log('Gallery container found');
+        const images = gsap.utils.toArray('.gallery-container img');
+        
+        ScrollTrigger.create({
+            trigger: gallery,
+            start: "top 80%",
+            end: "bottom 20%",
+            onEnter: () => {
+                console.log('Gallery entered viewport');
+                gallery.classList.add('is-visible');
+                animateImages();
+            },
+            onLeave: () => {
+                console.log('Gallery left viewport');
+                gallery.classList.remove('is-visible');
+            },
+            onEnterBack: () => {
+                console.log('Gallery entered viewport (scrolling up)');
+                gallery.classList.add('is-visible');
+                animateImages();
+            },
+            onLeaveBack: () => {
+                console.log('Gallery left viewport (scrolling up)');
+                gallery.classList.remove('is-visible');
+            }
+        });
+
+        function animateImages() {
+            images.forEach((img, index) => {
+                gsap.fromTo(img, 
+                    { scale: 0.8, opacity: 0 },
+                    { 
+                        scale: 1, 
+                        opacity: 1, 
+                        duration: 0.5, 
+                        ease: "power2.out",
+                        delay: index * 0.1,
+                        onStart: () => console.log(`Image ${index + 1} animation started`)
+                    }
+                );
+            });
+        }
+
+        console.log(`Found ${images.length} images in the gallery`);
     }
+
+    function cleanupEventListeners() {
+        // Implementa la limpieza de event listeners aquí si es necesario
+        console.log('Cleaning up event listeners');
+    }
+
+    function init() {
+        loadJSONData();
+        setupLanguageSelector();
+        setupCategorySelector();
+        setupPopup();
+        setupGalleryAnimations();
+        window.addEventListener('beforeunload', cleanupEventListeners);
+    }
+
+    init();
 });
