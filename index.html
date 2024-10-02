@@ -88,10 +88,10 @@
             <div class="container">
                 <h2>Galería de Imágenes</h2>
                 <div class="gallery-container">
-                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/copasq.JPG" alt="Interior del Spa" loading="lazy">
-                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/.JPG" alt="Evento de Masajes" class="wide" loading="lazy">
-                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/noche1.JPG" alt="Productos de Spa" class="tall" loading="lazy">
-                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/rosa.JPG" alt="Nuestro Equipo" loading="lazy">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/copasq.JPG" alt="Interior del Spa">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/.JPG" alt="Evento de Masajes" class="wide">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/noche1.JPG" alt="Productos de Spa" class="tall">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/rosa.JPG" alt="Nuestro Equipo">
                     <!-- Añade más imágenes según sea necesario -->
                 </div>
             </div>
@@ -171,38 +171,44 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
-<!-- GSAP y ScrollTrigger para animaciones -->
+    <!-- GSAP y ScrollTrigger para animaciones -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
     
     <!-- Tu script personalizado -->
     <script src="script.js"></script>
 
-    <!-- Script para la animación de la galería -->
+<!-- Script para la animación de la galería -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
 
-        const gallery = document.querySelector('.gallery-container');
+            const gallery = document.querySelector('.gallery-container');
 
-        ScrollTrigger.create({
-            trigger: gallery,
-            start: "top 80%",
-            onEnter: () => gallery.classList.add('is-visible'),
-            onLeaveBack: () => gallery.classList.remove('is-visible')
-        });
-
-        gsap.utils.toArray('.gallery-container img').forEach(img => {
-            gsap.from(img, {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.5,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: img,
+            if (gallery) {
+                ScrollTrigger.create({
+                    trigger: gallery,
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            });
+                    onEnter: () => gallery.classList.add('is-visible'),
+                    onLeaveBack: () => gallery.classList.remove('is-visible')
+                });
+
+                gsap.utils.toArray('.gallery-container img').forEach(img => {
+                    gsap.from(img, {
+                        scale: 0.8,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: img,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+            } else {
+                console.error('Gallery container not found');
+            }
         });
     </script>
 </body>
