@@ -170,4 +170,35 @@ document.addEventListener('DOMContentLoaded', () => {
             popup.style.display = 'none';
         }
     });
+
+    // Código para la animación de la galería
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const gallery = document.querySelector('.gallery-container');
+        if (gallery) {
+            ScrollTrigger.create({
+                trigger: gallery,
+                start: "top 80%",
+                onEnter: () => gallery.classList.add('is-visible'),
+                onLeaveBack: () => gallery.classList.remove('is-visible')
+            });
+
+            gsap.utils.toArray('.gallery-container img').forEach(img => {
+                gsap.from(img, {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: img,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+        }
+    } else {
+        console.warn('GSAP or ScrollTrigger not loaded. Gallery animations will not work.');
+    }
 });
