@@ -25,6 +25,7 @@ body {
     animation: gradientTransition 15s ease infinite;
     color: var(--text-color);
     padding-bottom: 60px;
+    text-size-adjust: 100%;
 }
 
 img {
@@ -531,5 +532,91 @@ footer {
 
     .nav-text {
         display: none;
+    }
+}
+
+/* Animación del gradiente */
+@keyframes gradientTransition {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Estilos de enfoque para accesibilidad */
+a:focus, button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+
+/* Prefijos de navegador para propiedades específicas */
+.service-item, .package-item, .choice-chip, .popup-content .close-btn {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.service-buttons button,
+.package-item button,
+.choice-chip,
+.popup-content .close-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Ajustes de impresión */
+@media print {
+    .service-item,
+    .package-item,
+    .testimonial {
+        break-inside: avoid;
+    }
+}
+
+/* Estilos para elementos de formulario */
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Ajustes para dispositivos de alta resolución */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo,
+    .nav-icon,
+    .footer-gif {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Ajustes de accesibilidad adicionales */
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* Ajustes para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1a1a1a;
+        --text-color: #ffffff;
+    }
+}
+
+/* Ajustes para animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
