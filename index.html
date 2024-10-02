@@ -87,19 +87,12 @@
         <section id="galeria" class="section gallery">
             <div class="container">
                 <h2>Galería de Imágenes</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/copasq.JPG" alt="Interior del Spa" width="250" height="250" loading="lazy" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-image.png';">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/.JPG" alt="Evento de Masajes" width="250" height="250" loading="lazy" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-image.png';">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/noche1.JPG" alt="Productos de Spa" width="250" height="250" loading="lazy" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-image.png';">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/rosa.JPG" alt="Nuestro Equipo" width="250" height="250" loading="lazy" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-image.png';">
-                    </div>
+                <div class="gallery-container">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/copasq.JPG" alt="Interior del Spa" loading="lazy">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/.JPG" alt="Evento de Masajes" class="wide" loading="lazy">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/noche1.JPG" alt="Productos de Spa" class="tall" loading="lazy">
+                    <img src="https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/rosa.JPG" alt="Nuestro Equipo" loading="lazy">
+                    <!-- Añade más imágenes según sea necesario -->
                 </div>
             </div>
         </section>
@@ -167,7 +160,7 @@
         </div>
     </template>
     
-<!-- Bootstrap JS -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <!-- Google Translate -->
@@ -178,7 +171,39 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
+<!-- GSAP y ScrollTrigger para animaciones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
     <!-- Tu script personalizado -->
     <script src="script.js"></script>
+
+    <!-- Script para la animación de la galería -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const gallery = document.querySelector('.gallery-container');
+
+        ScrollTrigger.create({
+            trigger: gallery,
+            start: "top 80%",
+            onEnter: () => gallery.classList.add('is-visible'),
+            onLeaveBack: () => gallery.classList.remove('is-visible')
+        });
+
+        gsap.utils.toArray('.gallery-container img').forEach(img => {
+            gsap.from(img, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: img,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+    </script>
 </body>
 </html>
