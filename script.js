@@ -201,4 +201,43 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.warn('GSAP or ScrollTrigger not loaded. Gallery animations will not work.');
     }
+    // Function to handle image loading errors
+function handleImageError(img) {
+    console.error(`Failed to load image: ${img.src}`);
+    img.src = 'https://raw.githubusercontent.com/elitemassagemx/Home/main/ICONOS/fallback-image.png';
+    img.alt = 'Image not available';
+}
+
+// Add error handling to all images
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('error', () => handleImageError(img));
+    });
+});
+
+// Asynchronous function to initialize Google Translate
+async function initGoogleTranslate() {
+    try {
+        await new Promise((resolve, reject) => {
+            if (typeof google !== 'undefined' && typeof google.translate !== 'undefined') {
+                new google.translate.TranslateElement({pageLanguage: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                resolve();
+            } else {
+                reject(new Error('Google Translate not loaded'));
+            }
+        });
+    } catch (error) {
+        console.error('Error initializing Google Translate:', error);
+    }
+}
+
+// Initialize Google Translate when the script is loaded
+if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+    initGoogleTranslate();
+} else {
+    document.addEventListener('DOMContentLoaded', initGoogleTranslate);
+}
+
+// Add any other custom JavaScript functionality here
 });
